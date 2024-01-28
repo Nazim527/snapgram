@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import "./helper/global.css";
+import "./global.css";
 import SigninForm from "./_auth/form/SigninForm";
 import { Home } from "./_root/pages";
 import SignupForm from "./_auth/form/SignupForm";
