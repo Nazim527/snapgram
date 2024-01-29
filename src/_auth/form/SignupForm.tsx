@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -15,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { SignUpValidation } from "@/lib/validation";
 import Loader from "@/components/shared/Loader";
 import { Link } from "react-router-dom";
+import { CreateUserAccount } from "@/lib/appwriter/api";
 
 const SignupForm = () => {
   const isLoading: boolean = false;
@@ -23,16 +23,16 @@ const SignupForm = () => {
     resolver: zodResolver(SignUpValidation),
     defaultValues: {
       name: "",
-      email: "",
+      email: "", 
       password: "",
       username: "",
     },
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof SignUpValidation>) {
-    // Do something with the form values.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof SignUpValidation>) {
+    const newUser = await CreateUserAccount(values)
+    console.log(newUser);
   }
 
   return (
