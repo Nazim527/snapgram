@@ -15,6 +15,7 @@ import { SignUpValidation } from "@/lib/validation";
 import Loader from "@/components/shared/Loader";
 import { Link } from "react-router-dom";
 import { CreateUserAccount } from "@/lib/appwriter/api";
+import { INewUser } from "@/types";
 
 const SignupForm = () => {
   const isLoading: boolean = false;
@@ -23,7 +24,7 @@ const SignupForm = () => {
     resolver: zodResolver(SignUpValidation),
     defaultValues: {
       name: "",
-      email: "", 
+      email: "",
       password: "",
       username: "",
     },
@@ -31,8 +32,12 @@ const SignupForm = () => {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof SignUpValidation>) {
-    const newUser = await CreateUserAccount(values)
-    console.log(newUser);
+    try {
+      const newUser = await CreateUserAccount(values);
+      console.log(newUser);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -46,7 +51,10 @@ const SignupForm = () => {
           To use Snapgram, please enter your details
         </p>
 
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5 w-full mt-4">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-5 w-full mt-4"
+        >
           <FormField
             control={form.control}
             name="name"
@@ -56,7 +64,7 @@ const SignupForm = () => {
                 <FormControl>
                   <Input type="text" className="shad-input" {...field} />
                 </FormControl>
-                
+
                 <FormMessage />
               </FormItem>
             )}
@@ -70,7 +78,7 @@ const SignupForm = () => {
                 <FormControl>
                   <Input type="text" className="shad-input" {...field} />
                 </FormControl>
-                
+
                 <FormMessage />
               </FormItem>
             )}
@@ -104,7 +112,7 @@ const SignupForm = () => {
           <Button type="submit" className="shad-button_primary">
             {isLoading ? (
               <div className=" flex-center gap-2">
-                <Loader/> Loading...
+                <Loader /> Loading...
               </div>
             ) : (
               "Sign Up"
@@ -112,8 +120,13 @@ const SignupForm = () => {
           </Button>
 
           <p className="small-regular text-light-2 text-center mt-2">
-              Already have an account? 
-              <Link to='/sign-in' className="text-primary-500 small-semibold ml-2">Log in</Link>
+            Already have an account?
+            <Link
+              to="/sign-in"
+              className="text-primary-500 small-semibold ml-2"
+            >
+              Log in
+            </Link>
           </p>
         </form>
       </div>

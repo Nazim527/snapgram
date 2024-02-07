@@ -4,11 +4,12 @@ import { ID } from "appwrite";
 
 export async function CreateUserAccount(user: INewUser) {
     try {
+        
         const newAccount = await account.create(
             ID.unique(),
-            user.name,
             user.email,
             user.password,
+            user.name,
         )
 
         return newAccount
