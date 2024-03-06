@@ -3,18 +3,17 @@ import { account } from "./config";
 import { ID } from "appwrite";
 
 export async function CreateUserAccount(user: INewUser) {
-    try {
-        
-        const newAccount = await account.create(
-            ID.unique(),
-            user.email,
-            user.password,
-            user.name,
-        )
+  try {
+    const newAccount = await account.create(
+      ID.unique(),
+      user.email,
+      user.password,
+      user.name
+    );
 
-        return newAccount
-    } catch (error) {
-        console.log(error);
-        return error
-    }
+    return newAccount;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
 }
